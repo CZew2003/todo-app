@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/models/Task.dart';
+import 'package:todoey_flutter/models/task_data.dart';
 
 class AddNewTodo extends StatelessWidget {
-  AddNewTodo({super.key, required this.onPressed});
+  AddNewTodo({super.key});
 
-  final Function(String) onPressed;
   String? inputValue;
 
   @override
@@ -47,7 +49,9 @@ class AddNewTodo extends StatelessWidget {
           TextButton(
             onPressed: () {
               if (inputValue != null) {
-                onPressed(inputValue!);
+                context.read<TaskData>().addTask(
+                      Task(message: inputValue!, isChecked: false),
+                    );
               }
               Navigator.pop(context);
             },

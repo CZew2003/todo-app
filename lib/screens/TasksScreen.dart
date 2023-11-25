@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/screens/add_new_todo.dart';
 import 'package:todoey_flutter/widgets/todo_list.dart';
-
+import 'package:provider/provider.dart';
 import '../models/Task.dart';
+import '../models/task_data.dart';
 
 class TaskScreen extends StatefulWidget {
   TaskScreen({super.key});
@@ -12,12 +13,6 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  final List<Task> todoItems = [
-    Task(message: 'Ana', isChecked: false),
-    Task(message: 'Cezar', isChecked: true),
-    Task(message: 'Pula', isChecked: false),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,13 +37,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom,
                   ),
-                  child: AddNewTodo(
-                    onPressed: (value) {
-                      setState(() {
-                        todoItems.add(Task(message: value, isChecked: false));
-                      });
-                    },
-                  ),
+                  child: AddNewTodo(),
                 ),
               );
             },
@@ -89,7 +78,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   ),
                 ),
                 Text(
-                  '${todoItems.length} tasks',
+                  '${context.watch<TaskData>().listTasks.length} tasks',
                   style: const TextStyle(
                     fontSize: 18,
                     color: Colors.white,
@@ -112,9 +101,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   ),
                 ),
               ),
-              child: TodoList(
-                todoItems: todoItems,
-              ),
+              child: TodoList(),
             ),
           ),
         ],

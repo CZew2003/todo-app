@@ -1,34 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/models/task_data.dart';
 
 import 'chechbox_item.dart';
 
 class TodoItem extends StatelessWidget {
-  final String message;
-  final bool isChecked;
-  final Function(bool?) onChanged;
+  final int index;
 
-  const TodoItem({
-    super.key,
-    required this.message,
-    required this.isChecked,
-    required this.onChanged,
-  });
+  const TodoItem({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        message,
-        style: TextStyle(
-          color: isChecked ? Colors.lightBlueAccent : Colors.red,
-          fontSize: 18,
-        ),
-      ),
-      trailing: Checkbox(
-        activeColor: Colors.lightBlueAccent,
-        onChanged: onChanged,
-        value: isChecked,
-      ),
+    return Consumer<TaskData>(
+      builder: (BuildContext context, TaskData value, Widget? child) {
+        return ListTile(
+          title: Text(
+            value.getTask(index).message,
+            style: TextStyle(
+              color: value.getTask(index).isChecked
+                  ? Colors.lightBlueAccent
+                  : Colors.red,
+              fontSize: 18,
+            ),
+          ),
+          trailing: Checkbox(
+            activeColor: Colors.lightBlueAccent,
+            onChanged: (newValue) {
+              value.changeCheck(index, newValue);
+            },
+            value: value.getTask(index).isChecked,
+          ),
+          onLongPress: () {
+            value.removeTask(index);
+          },
+        );
+      },
     );
   }
 }
