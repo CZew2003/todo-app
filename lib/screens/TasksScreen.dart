@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/screens/add_new_todo.dart';
+import 'package:todoey_flutter/widgets/fliter_widget.dart';
 import 'package:todoey_flutter/widgets/todo_list.dart';
 import 'package:provider/provider.dart';
 import '../models/Task.dart';
@@ -57,15 +58,7 @@ class _TaskScreenState extends State<TaskScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.list,
-                    size: 30,
-                    color: Colors.lightBlueAccent,
-                  ),
-                ),
+                FilterWidget(),
                 const SizedBox(
                   height: 20,
                 ),

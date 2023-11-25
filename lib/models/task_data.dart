@@ -29,4 +29,21 @@ class TaskData with ChangeNotifier {
     _listTasks.removeAt(index);
     notifyListeners();
   }
+
+  void orderLists(Order order) {
+    if (order == Order.ascending) {
+      _listTasks.sort((task1, task2) {
+        return task1.message.compareTo(task2.message);
+      });
+    } else if (order == Order.descending) {
+      _listTasks.sort((task1, task2) {
+        return task2.message.compareTo(task1.message);
+      });
+    } else {
+      return;
+    }
+    notifyListeners();
+  }
 }
+
+enum Order { ascending, descending, none }
